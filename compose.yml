@@ -70,6 +70,23 @@ services:
       - backend
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
+    develop:
+      watch:
+        # Rebuild frontend image when UI source or build config changes.
+        - action: rebuild
+          path: ./frontend/src
+        - action: rebuild
+          path: ./frontend/package.json
+        - action: rebuild
+          path: ./frontend/package-lock.json
+        - action: rebuild
+          path: ./frontend/next.config.ts
+        - action: rebuild
+          path: ./frontend/postcss.config.js
+        - action: rebuild
+          path: ./frontend/tailwind.config.cjs
+        - action: rebuild
+          path: ./frontend/tsconfig.json
 
   webhook-worker:
     build:

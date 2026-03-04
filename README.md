@@ -100,6 +100,36 @@ Before startup:
 docker compose -f compose.yml --env-file .env up -d --build
 ```
 
+If you are iterating on the UI in Docker and want automatic frontend rebuilds on
+source changes, run:
+
+```bash
+docker compose -f compose.yml --env-file .env up --build --watch
+```
+
+Notes:
+
+- Compose Watch requires Docker Compose **2.22.0+**.
+- You can also run watch separately after startup:
+
+```bash
+docker compose -f compose.yml --env-file .env up -d --build
+docker compose -f compose.yml --env-file .env watch
+```
+
+After pulling new changes, rebuild and recreate all services:
+
+```bash
+docker compose -f compose.yml --env-file .env up -d --build --force-recreate
+```
+
+For a fully clean rebuild (no cached build layers):
+
+```bash
+docker compose -f compose.yml --env-file .env build --no-cache --pull
+docker compose -f compose.yml --env-file .env up -d --force-recreate
+```
+
 ### 3. Open the application
 
 - Mission Control UI: http://localhost:3000
